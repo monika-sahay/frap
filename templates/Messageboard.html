@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+  <title>Message Board</title>
+  <form method="POST" action="{{ message_url }}">
+    <textarea name="message"></textarea>
+    <br>
+    <button type="submit">Post it!</button>
+  </form>
+
+
+  <ul>
+    {% for item in  values['value'] %}
+      {% if item %}
+        <li>{{ item }}</li>
+      {% endif %}
+    {% endfor %}
+</ul>
+
+  
