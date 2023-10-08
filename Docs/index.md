@@ -1,11 +1,11 @@
-# Project Name
+# Frap
 
-A brief description or tagline of your project.
+Frap stands for Framework with react and python.
 
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Installation](#installation)
+- [Getting Started](#getting_started)
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
@@ -15,7 +15,7 @@ A brief description or tagline of your project.
 
 Provide an introduction to your project. Explain its purpose, goals, and any background information that's relevant. This section should give readers a clear idea of what your project does.
 
-## Installation
+## Getting Started
 
 Explain how to install your project. Include any prerequisites, dependencies, and step-by-step installation instructions. You can also provide code examples or command-line instructions for installation.
 
