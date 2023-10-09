@@ -44,7 +44,8 @@ from app.app import App  # Import the App class from the app package
 from app.templates import render_template  # Import the render_template function from the app package
 from app.responses import redirect  # Import the redirect function from the app package
 from werkzeug.wrappers import Response
-
+from app.components import CustomSlider
+# from werkzeug.utils import redirect
 
 app = App(__name__)
 
@@ -52,12 +53,17 @@ app = App(__name__)
 app.add_url_rule('index', '/')
 app.add_url_rule('login', '/login')
 app.add_url_rule('message', '/message')
+app.add_url_rule('submit', '/submit')
+
 
 
 @app.route('/')
 def handle_query(request):
+    slider_component = CustomSlider("Slider", 0, 100, 50, 1)
+    custom_slider_html = slider_component.render_html()
+    custom_slider_js = slider_component.render_js()
     login_url = app.url_for('login')
-    return Response(render_template('index.html'), content_type='text/html')
+    return Response(render_template('index.html', custom_slider_html=custom_slider_html,custom_slider_js=custom_slider_js, login_url=login_url), content_type='text/html')
 
 @app.route('/login', methods=['POST', 'GET'])
 def login(request):
@@ -77,9 +83,51 @@ def message(request):
     if request.method == 'POST':
         messagestring = request.form.get('message')
         messageBoard.append(messagestring)
+        print(messageBoard)
         # Generate URL for the 'message' endpoint with a placeholder
         message_url = app.url_for('message')
         return redirect(message_url)
 
     values = {'value': messageBoard}
     return Response(render_template('Messageboard.html', values=values), content_type='text/html')
+
+@app.route('/submit', methods=['POST'])
+def submit(request):
+    slider_value = request.form.get('Slider')
+    print(slider_value)
+    # Process the slider value here
+    response_text = f'Slider Value: {slider_value}'
+    
+    # Create a Response object with the response text
+    response = Response(response_text, content_type='text/plain', status=200)
+    
+    return response
+
+# @app.route('/submit', methods=['POST'])
+# def submit(request):
+#     slider_value = request.form.get('Slider')
+#     print(slider_value)
+#     # Process the slider value here
+#     return f'Slider Value: {slider_value}'
+
+
+
+
+# @app.route('/submit', methods=['POST'])
+# def submit(request):
+#     slider_value = request.form.get('slider')
+#     # Process the slider value here
+#     return f'Slider Value: {slider_value}'
+
+# @app.route('/submit', methods=['POST'])
+# def submit(request):
+#     submit_url = app.url_for('/')
+#     print(request.form)
+#     slider_value = request.form.get('Slider')
+#     print(slider_value)
+#     # Process the slider value here
+#     response_text = f'Slider Value: {slider_value}'
+#     return render_template('index.html', response_text=response_text, submit_url=submit_url)  # Return a Response object
+    # except Exception as e:
+    #     print(f"An error occurred: {e}")
+    #     return Response("An error occurred while processing the request.", status=500)

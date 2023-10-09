@@ -1,8 +1,18 @@
+<!-- index.html -->
 {% extends "base.html" %}
 
 {% block content %}
   <div class="jumbotron">
-    <h1>Wellcome to the site hosted on HTTP.server </h1>
+    <h1>Welcome to the site hosted on Frap server</h1>
+    
 
-  </div>
+    <form action="/submit" method="post">
+      {{ custom_slider_html }}
+      <input type="submit" value="Submit">
+  </form>
+  <!-- Include the JavaScript code here -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    {{ custom_slider_js }}
+  </script>
 {% endblock %}
