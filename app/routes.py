@@ -44,7 +44,7 @@ from app.app import App  # Import the App class from the app package
 from app.templates import render_template  # Import the render_template function from the app package
 from app.responses import redirect  # Import the redirect function from the app package
 from werkzeug.wrappers import Response
-from app.components import CustomSlider
+from app.components import CustomSlider, LoginForm, Form, FeedbackForm, StarRating, Sidebar, Navbar
 # from werkzeug.utils import redirect
 
 app = App(__name__)
@@ -56,40 +56,90 @@ app.add_url_rule('message', '/message')
 app.add_url_rule('submit', '/submit')
 
 
+# feedback_form = FeedbackForm('/submit_feedback')
+feedback_form = Form(action="/submit_feedback")
+
+# Add fields to the form
+feedback_form.add_field("Name", "name", "text")
+feedback_form.add_field("Email", "email", "email")
+
+# Create a StarRating component
+star_rating = StarRating("stars", 5)
+
+# Add the star rating component as a custom component
+feedback_form.add_custom_component(star_rating.render_html())
+
+# Add a submit button to the form
+feedback_form.add_button("Submit")
 
 @app.route('/')
 def handle_query(request):
     slider_component = CustomSlider("Slider", 0, 100, 50, 1)
+    star = StarRating("rating",5)
     custom_slider_html = slider_component.render_html()
     custom_slider_js = slider_component.render_js()
     login_url = app.url_for('login')
-    return Response(render_template('index.html', custom_slider_html=custom_slider_html,custom_slider_js=custom_slider_js, login_url=login_url), content_type='text/html')
+    return Response(render_template('index.html', custom_slider_html=custom_slider_html,custom_slider_js=custom_slider_js, login_url=login_url, feedback_form=feedback_form, star=star), content_type='text/html')
 
 @app.route('/login', methods=['POST', 'GET'])
 def login(request):
-    username = request.form.get('username')
-    password = request.form.get('pw')
-    if username == 'monika' and password == 'moni':
-        # Generate URL for the 'message' endpoint with a placeholder
-        login_url = app.url_for('login')
-        return redirect('/message')
-
-    return Response(render_template('LoginPage.html'), content_type='text/html')
+    form_elements = [
+        {'label': 'Username', 'name': 'username', 'type': 'text'},
+        {'label': 'Password', 'name': 'pw', 'type': 'password'}
+    ]
+    login_form = LoginForm("/login", form_elements)
+    sidebar_items = [
+        {"url": "/", "label": "Home"},
+        {"url": "/about", "label": "About"},
+        {"url": "/contact", "label": "Contact"}
+    ]
+    navbar_items = [
+        {"url": "/", "label": "Home"},
+        {"url": "/about", "label": "About"},
+        {"url": "/contact", "label": "Contact"}
+    ]
+    navbar = Navbar(navbar_items, background_color="#333", text_color="#fff", hover_color="#4CAF50")
+    # sidebar = Sidebar(sidebar_items, width=200, background_color="#f3f3f3", text_color="#818181", hover_color="#f1f1f1")
+    # sidebar = Sidebar(sidebar_items, width=1280, background_color="#f5f5f5", text_color="#007bff", hover_color="#b0b0b0", orientation="horizontal")
+    # vertical_sidebar = Sidebar(sidebar_items)
+    # sidebar_horizontal = Sidebar(sidebar_items, width=1250, background_color="#f5f5f5", text_color="#818181", hover_color="#f1f1f1", orientation="horizontal", top=0, left=0, right=None, bottom=None)
+    sidebar_vertical = Sidebar(sidebar_items, width=200, background_color="#f3f3f3", text_color="#818181", hover_color="#f1f1f1", orientation="vertical", top=50, left=0, right=None, bottom=None)
+    if request.method == 'POST':
+        login_data = request.form
+        username = login_data.get('username')
+        password = login_data.get('pw')
+        if username == 'monika' and password == 'moni':
+            return redirect('/message')
+    return Response(render_template('LoginPage.html', login_form=login_form, sidebar_vertical=sidebar_vertical, navbar=navbar), content_type='text/html')
 
 messageBoard = []
 
 @app.route('/message', methods=['POST', 'GET'])
 def message(request):
+    my_form = Form(action='/message', method='POST')
+    # Add form fields
+    my_form.add_field(label='Name', name='name', input_type='text')
+    my_form.add_field(label='Email', name='email', input_type='email')
+    my_form.add_field(label='Password', name='password', input_type='password')
+
     if request.method == 'POST':
         messagestring = request.form.get('message')
         messageBoard.append(messagestring)
-        print(messageBoard)
         # Generate URL for the 'message' endpoint with a placeholder
         message_url = app.url_for('message')
         return redirect(message_url)
 
+    # Render the HTML markup for the form
+    # if request.method == 'POST':
+    #     messagestring = request.form.get('message')
+    #     messageBoard.append(messagestring)
+    #     print(messageBoard)
+    #     # Generate URL for the 'message' endpoint with a placeholder
+    #     message_url = app.url_for('message')
+    #     return redirect(message_url)
+
     values = {'value': messageBoard}
-    return Response(render_template('Messageboard.html', values=values), content_type='text/html')
+    return Response(render_template('Messageboard.html', values=values, my_form= my_form), content_type='text/html')
 
 @app.route('/submit', methods=['POST'])
 def submit(request):
@@ -103,31 +153,22 @@ def submit(request):
     
     return response
 
-# @app.route('/submit', methods=['POST'])
-# def submit(request):
-#     slider_value = request.form.get('Slider')
-#     print(slider_value)
-#     # Process the slider value here
-#     return f'Slider Value: {slider_value}'
+@app.route('/submit_feedback', methods=['POST'])
+def submit_feedback(request):
+    if request.method == 'POST':
+        # Retrieve form field values
+        name = request.form.get('name')
+        print(name)
+        email = request.form.get('email')
+        print(email)
+        feedback = request.form.get('feedback')
+        print(feedback)
+        rating = request.form.get('stars') 
+        print(rating) # Retrieve the star rating value
 
+        # Process the form data (e.g., save to a database, send an email)
+        # ...
 
+        # Redirect to a thank you page or back to the form
+    return Response(render_template('index.html', feedback_form=feedback_form), content_type='text/html')
 
-
-# @app.route('/submit', methods=['POST'])
-# def submit(request):
-#     slider_value = request.form.get('slider')
-#     # Process the slider value here
-#     return f'Slider Value: {slider_value}'
-
-# @app.route('/submit', methods=['POST'])
-# def submit(request):
-#     submit_url = app.url_for('/')
-#     print(request.form)
-#     slider_value = request.form.get('Slider')
-#     print(slider_value)
-#     # Process the slider value here
-#     response_text = f'Slider Value: {slider_value}'
-#     return render_template('index.html', response_text=response_text, submit_url=submit_url)  # Return a Response object
-    # except Exception as e:
-    #     print(f"An error occurred: {e}")
-    #     return Response("An error occurred while processing the request.", status=500)

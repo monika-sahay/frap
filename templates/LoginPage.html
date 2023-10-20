@@ -6,21 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login Page</title>
     <style>
-        label, input, button {
-            margin: 8px;
-        }
+        {{ navbar.render_css() }}
+        {{ login_form.render_css() }}
+
+        {{ sidebar_vertical.render_css() }}
     </style>
 </head>
 <body>
-    <form action="{{ login_url }}" method="POST">
-        <h2>Login</h2>
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username">
-        <br>
-        <label for="pw">Password:</label>
-        <input type="password" name="pw" id="pw">
-        <br>
-        <button type=submit>Log in!</button>
-    </form>
+        {{ navbar.render_html() }}
+        {{ sidebar_vertical.render_html() }}
+    <div class="content">
+        <!-- {{ login_form.render_html() }} -->
+    </div>
 </body>
 </html>

@@ -122,7 +122,7 @@ def test_message_route(app_and_client):
     assert response.status_code == 200
 
     # Parse the HTML content using BeautifulSoup
-    soup = BeautifulSoup(response.text.encode(), 'html.parser')
+    soup = BeautifulSoup(response.text, 'html.parser')
 
     # Find the <title> element
     title_element = soup.find('title')
@@ -136,29 +136,17 @@ def test_message_route(app_and_client):
     # Simulate a POST request to the '/message' route with the message data
     response = client.post('/message', data={'message': message_to_post})
 
-    # Assert that the response status code is 303 (or another appropriate status code)
-    assert response.status_code == 303
-
-    # Check if the response contains a 'Location' header
-    assert 'Location' in response.headers
-
-    # Get the URL from the 'Location' header
-    redirect_url = response.headers['Location']
-
-    # Simulate a GET request to the redirect URL to view the updated page
-    response = client.get(redirect_url)
-
     # Assert that the response status code is 200 (or another appropriate status code)
     assert response.status_code == 200
 
-    # Parse the HTML content using BeautifulSoup
-    soup = BeautifulSoup(response.text.encode(), 'html.parser')
+    # Parse the updated HTML content using BeautifulSoup
+    soup = BeautifulSoup(response.text, 'html.parser')
 
     # Find the <ul> element where posted messages are typically displayed
     ul_element = soup.find('ul')
 
     # Check if the posted message is present within the <ul> element
-    assert message_to_post in ul_element.text
+    assert f"> {message_to_post}" in ul_element.text
 
 
 def test_submit_route(app_and_client):

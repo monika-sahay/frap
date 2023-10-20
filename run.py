@@ -16,7 +16,7 @@ Author:
 Date:
     Date when this script was created or last modified.
 """
-from server.threaded_server import run_threaded
+# from server.threaded_server import run_threaded
 from app.routes import app  # Import your app instance
 
 if __name__ == '__main__':
