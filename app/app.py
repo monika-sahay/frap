@@ -1,12 +1,15 @@
 """
 Frap Web Framework Application
 
-This module defines the core Frap web application class, which serves as the foundation for building web applications using Frap.
+This module defines the core Frap web application class, which serves
+    as the foundation for building web applications using Frap.
 
-The `App` class provides functionality for defining routes, handling requests, generating URLs, and running the web server.
+The `App` class provides functionality for defining routes,
+    handling requests, generating URLs, and running the web server.
 
 Usage:
-    To create a Frap web application, instantiate the `App` class, define routes using the `route` decorator,
+    To create a Frap web application, instantiate the `App` class,
+        define routes using the `route` decorator,
     and run the application using the `run_server` method.
 
 Example:
@@ -29,28 +32,37 @@ Classes:
     - App: The main application class for building Frap web applications.
 
 Functions:
-    - route(path, methods=None): A decorator function for defining routes and mapping route handlers to URLs.
-    - handle_request(environ, start_response): Handles incoming HTTP requests and dispatches them to the appropriate route handler.
-    - add_url_rule(endpoint, url_pattern): Adds a URL rule for mapping an endpoint to a URL pattern.
-    - url_for(endpoint, **values): Generates URLs for specified endpoints with placeholders.
-    - run_server(host='0.0.0.0', port=8000): Starts the web server and listens for incoming requests.
+    - route(path, methods=None): A decorator function for defining routes
+        and mapping route handlers to URLs.
+    - handle_request(environ, start_response): Handles incoming HTTP requests
+        and dispatches them to the appropriate route handler.
+    - add_url_rule(endpoint, url_pattern): Adds a URL rule for mapping
+        an endpoint to a URL pattern.
+    - url_for(endpoint, **values): Generates URLs for specified endpoints
+        with placeholders.
+    - run_server(host='0.0.0.0', port=8000): Starts the web server
+        and listens for incoming requests.
 
 Dependencies:
-    - werkzeug.wrappers.Request: Provides tools for constructing HTTP request objects.
-    - werkzeug.wrappers.Response: Provides tools for constructing HTTP response objects.
+    - werkzeug.wrappers.Request: Provides tools for constructing HTTP request
+        objects.
+    - werkzeug.wrappers.Response: Provides tools for constructing HTTP
+        response objects.
     - werkzeug.serving.make_server: Creates a WSGI-compliant web server.
-    - IPython.embed: Embeds an interactive IPython shell for debugging purposes.
-    - werkzeug.debug.DebuggedApplication: Wraps the application with debugging features.
+    - IPython.embed: Embeds an interactive IPython shell for debugging
+        purposes.
+    - werkzeug.debug.DebuggedApplication: Wraps the application with
+     debugging features.
 
 """
-
 
 
 # app.py
 from werkzeug.wrappers import Request, Response
 from werkzeug.serving import make_server
-from IPython import embed
-from werkzeug.debug import DebuggedApplication
+# from IPython import embed
+# from werkzeug.debug import DebuggedApplication
+
 
 class App:
     """
@@ -61,8 +73,9 @@ class App:
         routes (list): A list of route handlers defined for this application.
         url_map (dict): A dictionary mapping endpoint names to URL patterns.
         name (str): The name of the application.
+        config (dict): A dictionary for storing application configurations.
     """
-    def __init__(self, name):
+    def __init__(self, name, config=None):
         """
         Initialize a new instance of the `App` class.
 
@@ -72,6 +85,7 @@ class App:
         self.routes = []
         self.url_map = {}
         self.name = name
+        self.config = config or {}
 
     def route(self, path, methods=None):
         """
@@ -97,10 +111,12 @@ class App:
 
     def handle_request(self, environ, start_response):
         """
-        Handle incoming HTTP requests and route them to the appropriate handler.
+        Handle incoming HTTP requests and
+            route them to the appropriate handler.
 
         Args:
-            environ (dict): The WSGI environment dictionary representing the request.
+            environ (dict): The WSGI environment
+                dictionary representing the request.
             start_response (function): The WSGI start_response function.
 
         Returns:
@@ -115,7 +131,7 @@ class App:
 
         response = Response('Not Found', status=404)
         return response(environ, start_response)
-    
+
     def add_url_rule(self, endpoint, url_pattern):
         """
         Add a URL rule to map an endpoint name to a URL pattern.
@@ -132,13 +148,15 @@ class App:
 
         Args:
             endpoint (str): The name of the endpoint.
-            **values: Keyword arguments for replacing placeholders in the URL pattern.
+            **values: Keyword arguments for replacing
+                placeholders in the URL pattern.
 
         Returns:
             str: The generated URL.
-        
+
         Raises:
-            ValueError: If the specified endpoint is not found in the URL rules.
+            ValueError: If the specified endpoint
+                is not found in the URL rules.
         """
         if endpoint in self.url_map:
             url_pattern = self.url_map[endpoint]
@@ -152,29 +170,28 @@ class App:
         Run the WSGI server to serve the application.
 
         Args:
-            host (str, optional): The host address to bind the server to. Defaults to '0.0.0.0'.
-            port (int, optional): The port number to listen on. Defaults to 8000.
+            host (str, optional): The host address to bind the server to.
+            Defaults to '0.0.0.0'.
+            port (int, optional): The port number to listen on.
+            Defaults to 8000.
         """
         httpd = make_server(host, port, self)
         print(f"Serving on {host}:{port}")
         httpd.serve_forever()
-
-
 
     def __call__(self, environ, start_response):
         """
         The WSGI callable for the application.
 
         Args:
-            environ (dict): The WSGI environment dictionary representing the request.
+            environ (dict): The WSGI environment dictionary
+                representing the request.
             start_response (function): The WSGI start_response function.
 
         Returns:
             Response: The HTTP response generated by the handler.
         """
         return self.handle_request(environ, start_response)
-
-
 
 
 if __name__ == '__main__':
