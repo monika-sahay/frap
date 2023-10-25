@@ -9,7 +9,8 @@ class CustomSlider:
         - min_value (int): The minimum value of the slider.
         - max_value (int): The maximum value of the slider.
         - default_value (int): The initial or default value of the slider.
-        - step (int): The step size for incrementing or decrementing the slider value.
+        - step (int): The step size for incrementing or decrementing the
+            slider value.
         """
         self.label = label
         self.min_value = min_value
