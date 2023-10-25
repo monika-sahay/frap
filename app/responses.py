@@ -24,6 +24,7 @@ Dependencies:
 # responses.py
 from werkzeug.wrappers import Response
 
+
 def redirect(location):
     """
     Generate a redirect response to the specified location.
