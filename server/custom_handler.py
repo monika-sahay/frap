@@ -1,23 +1,19 @@
 # custom_handler.p
 from werkzeug.wrappers import Request
-from app.app import App
 from io import BytesIO
 import sys
 import http.server
 from http.server import HTTPServer
-import pdb
-from IPython import embed
+
 
 class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, app_instance, *args, **kwargs):
         self.app_instance = app_instance
         super().__init__(*args, **kwargs)
 
-  
-    breakpoint()
     def do_GET(self):
         print("Received GET request:", self.path)
-        breakpoint() 
+        breakpoint()
         environ = {
             'REQUEST_METHOD': self.command,
             'PATH_INFO': self.path,
