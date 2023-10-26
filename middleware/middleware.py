@@ -1,9 +1,9 @@
 # Middleware Class
 """
-The `Middleware` class serves as the base class for creating custom middleware components in the Frap web framework. 
-Middleware components are responsible for processing incoming requests and outgoing 
-responses as they pass through the middleware pipeline. 
-You can create custom middleware classes by inheriting from this base class 
+The `Middleware` class serves as the base class for creating custom middleware components in the Frap web framework.
+Middleware components are responsible for processing incoming requests and outgoing
+responses as they pass through the middleware pipeline.
+You can create custom middleware classes by inheriting from this base class
 and implementing the necessary methods.
 
 """

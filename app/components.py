@@ -25,14 +25,14 @@ class CustomSlider:
         Returns:
         - str: A string containing HTML markup for the custom slider element.
         """
-        html = f'''
+        html = f"""
             <label>{self.label}</label>
-            <input type="range" id="{self.label}" name="{self.label}" 
-                   min="{self.min_value}" max="{self.max_value}" 
+            <input type="range" id="{self.label}" name="{self.label}"
+                   min="{self.min_value}" max="{self.max_value}"
                    value="{self.default_value}" step="{self.step}">
             <span id="{self.label}-value">{self.default_value}</span>
             <br>
-        '''
+        """
         return html
 
     def render_js(self):
@@ -42,7 +42,7 @@ class CustomSlider:
         Returns:
         - str: A string containing JavaScript code for updating the slider's value display.
         """
-        js = f'''
+        js = f"""
             $(document).ready(function() {{
                 $('input[type="range"]').on('input', function() {{
                     var label = $(this).attr('id');
@@ -50,23 +50,23 @@ class CustomSlider:
                     $('#{self.label}-value').text(value);
                 }});
             }});
-        '''
+        """
         return js
 
 
 class Form:
-    def __init__(self, action, method='POST'):
+    def __init__(self, action, method="POST"):
         self.action = action
         self.method = method
         self.fields = []
         self.buttons = []
         self.custom_components = []
 
-    def add_field(self, label, name, input_type='text'):
-        field = {'label': label, 'name': name, 'type': input_type}
+    def add_field(self, label, name, input_type="text"):
+        field = {"label": label, "name": name, "type": input_type}
         self.fields.append(field)
 
-    def add_button(self, label, button_type='submit'):
+    def add_button(self, label, button_type="submit"):
         button = Button(label, button_type)
         self.buttons.append(button)
 
@@ -74,20 +74,20 @@ class Form:
         self.custom_components.append(custom_html)
 
     def render_html(self):
-        html = f'''
+        html = f"""
             <form action="{self.action}" method="{self.method}" class="dynamic-form">
-        '''
+        """
         for field in self.fields:
-            label = field['label']
-            name = field['name']
-            input_type = field['type']
-            input_id = f'form-{name}'
-            html += f'''
+            label = field["label"]
+            name = field["name"]
+            input_type = field["type"]
+            input_id = f"form-{name}"
+            html += f"""
                 <div class="form-group">
                     <label for="{input_id}">{label}:</label>
                     <input type="{input_type}" name="{name}" id="{input_id}" class="form-control">
                 </div>
-            '''
+            """
 
         for custom_component in self.custom_components:
             html += custom_component
@@ -96,12 +96,22 @@ class Form:
             button_html = button.render_html()
             html += button_html
 
-        html += '''
+        html += """
                 </form>
-        '''
+        """
         return html
 
-    def render_css(self, width='50%', margin_top='50px', left='auto', right='auto', top='auto', bottom='auto', z_index='auto', overlap=False):
+    def render_css(
+        self,
+        width="50%",
+        margin_top="50px",
+        left="auto",
+        right="auto",
+        top="auto",
+        bottom="auto",
+        z_index="auto",
+        overlap=False,
+    ):
         """
         Generate CSS styles for the dynamic form.
 
@@ -118,8 +128,8 @@ class Form:
         Returns:
         - str: A string containing CSS styles for the dynamic form.
         """
-        overlap_value = 'hidden' if overlap else 'visible'
-        css = f'''
+        overlap_value = "hidden" if overlap else "visible"
+        css = f"""
             /* Custom styles for the dynamic form */
             .dynamic-form {{
                 width: {width};
@@ -166,19 +176,21 @@ class Form:
             }}
 
             /* Add more custom styles as needed */
-        '''
+        """
         return css
 
+
 class Button:
-    def __init__(self, label, button_type='submit'):
+    def __init__(self, label, button_type="submit"):
         self.label = label
         self.button_type = button_type
 
     def render_html(self):
-        html = f'''
+        html = f"""
             <button type="{self.button_type}" class="btn btn-primary">{self.label}</button>
-        '''
+        """
         return html
+
 
 class LoginForm(Form):
     def __init__(self, login_url, form_elements=None):
@@ -191,9 +203,9 @@ class LoginForm(Form):
         super().__init__(login_url)
         if form_elements:
             for element in form_elements:
-                label = element.get('label', '')
-                name = element.get('name', '')
-                input_type = element.get('type', 'text')
+                label = element.get("label", "")
+                name = element.get("name", "")
+                input_type = element.get("type", "text")
                 self.add_field(label, name, input_type)
 
         self.add_button("Submit")
@@ -216,7 +228,7 @@ class LoginForm(Form):
         - str: A string containing CSS styles for the login form.
         """
         # Define custom CSS styles specific to the login form
-        custom_css = '''
+        custom_css = """
             /* Custom styles for the login form */
             .login-form {
                 background-color: #f5f5f5;
@@ -250,7 +262,7 @@ class LoginForm(Form):
             }
 
             /* Add more custom styles as needed */
-        '''
+        """
         # Combine the base form styles with custom styles
         base_css = super().render_css()
         # base_css = ''
@@ -263,15 +275,15 @@ class StarRating:
         self.num_stars = num_stars
 
     def render_html(self):
-        star_elements = ''.join(
-            f'''
+        star_elements = "".join(
+            f"""
             <input type="radio" name="{self.name}" id="{self.name}-{self.num_stars - i}" value="{self.num_stars - i}"/>
             <label for="{self.name}-{self.num_stars - i}"></label>
-            '''
+            """
             for i in range(self.num_stars)
         )
 
-        css = '''
+        css = """
         <style>
             .star-rating {
                 display: flex;
@@ -323,19 +335,31 @@ class StarRating:
             }
             }
         </style>
-        '''
+        """
 
-        html = f'''
+        html = f"""
             {css}
             <div class="star-rating">
                 {star_elements}
             </div>
-        '''
+        """
         return html
 
 
 class Sidebar:
-    def __init__(self, items, width=200, background_color="#f5f5f5", text_color="#818181", hover_color="#f1f1f1", orientation="vertical", top=None, left=None, right=None, bottom=None):
+    def __init__(
+        self,
+        items,
+        width=200,
+        background_color="#f5f5f5",
+        text_color="#818181",
+        hover_color="#f1f1f1",
+        orientation="vertical",
+        top=None,
+        left=None,
+        right=None,
+        bottom=None,
+    ):
         self.items = items
         self.width = width
         self.background_color = background_color
@@ -350,13 +374,13 @@ class Sidebar:
     def render_html(self):
         sidebar_html = f'<div class="sidebar" style="width: {self.width}px; background-color: {self.background_color};'
         if self.top is not None:
-            sidebar_html += f' top: {self.top}px;'
+            sidebar_html += f" top: {self.top}px;"
         if self.left is not None:
-            sidebar_html += f' left: {self.left}px;'
+            sidebar_html += f" left: {self.left}px;"
         if self.right is not None:
-            sidebar_html += f' right: {self.right}px;'
+            sidebar_html += f" right: {self.right}px;"
         if self.bottom is not None:
-            sidebar_html += f' bottom: {self.bottom}px;'
+            sidebar_html += f" bottom: {self.bottom}px;"
         if self.orientation == "horizontal":
             sidebar_html += ' display: flex; flex-direction: row;">'
         else:
@@ -364,11 +388,11 @@ class Sidebar:
 
         for item in self.items:
             sidebar_html += f'<a href="{item["url"]}" style="color: {self.text_color}; display: block; text-decoration: none; padding: 6px 8px 6px 16px;">{item["label"]}</a>'
-        sidebar_html += '</div>'
+        sidebar_html += "</div>"
         return sidebar_html
 
     def render_css(self):
-        sidebar_css = f'''
+        sidebar_css = f"""
         .sidebar {{
             position: fixed;
             { "top: " + str(self.top) + "px;" if self.top is not None else "" }
@@ -390,26 +414,32 @@ class Sidebar:
         .sidebar a:hover {{
             color: {self.hover_color};
         }}
-        '''
+        """
         return sidebar_css
-    
+
 
 class Navbar:
-    def __init__(self, items, background_color="#333", text_color="#fff", hover_color="#4CAF50"):
+    def __init__(
+        self, items, background_color="#333", text_color="#fff", hover_color="#4CAF50"
+    ):
         self.items = items
         self.background_color = background_color
         self.text_color = text_color
         self.hover_color = hover_color
 
     def render_html(self):
-        navbar_html = '<div class="navbar" style="background-color: {};">'.format(self.background_color)
+        navbar_html = '<div class="navbar" style="background-color: {};">'.format(
+            self.background_color
+        )
         for item in self.items:
-            navbar_html += '<a href="{}" style="color: {}; padding: 14px 16px; text-decoration: none;">{}</a>'.format(item["url"], self.text_color, item["label"])
-        navbar_html += '</div>'
+            navbar_html += '<a href="{}" style="color: {}; padding: 14px 16px; text-decoration: none;">{}</a>'.format(
+                item["url"], self.text_color, item["label"]
+            )
+        navbar_html += "</div>"
         return navbar_html
 
     def render_css(self):
-        navbar_css = f'''
+        navbar_css = f"""
             .navbar {{
                 overflow: hidden;
             }}
@@ -427,8 +457,10 @@ class Navbar:
                 background-color: {self.hover_color};
                 color: black;
             }}
-        '''
+        """
         return navbar_css
+
+
 # class Sidebar:
 #     def __init__(self, items, width=200, background_color="#f5f5f5", text_color="#818181", hover_color="#f1f1f1", orientation="vertical"):
 #         self.items = items
@@ -513,10 +545,10 @@ class Navbar:
 #         }}
 #         '''
 #         return sidebar_css
-    
+
 
 class FeedbackForm(Form):
-    def __init__(self, action, method='POST'):
+    def __init__(self, action, method="POST"):
         """
         Initialize a FeedbackForm instance.
 
@@ -532,11 +564,10 @@ class FeedbackForm(Form):
 
         # Create a StarRating component
         star_rating = StarRating("stars", 5)
-    
 
         # Add the star rating component as a custom component
         self.add_custom_component(star_rating.render_html())
-        
+
         self.add_button("Submit")  # Add a submit button
 
     def render_html(self):
@@ -551,7 +582,7 @@ class FeedbackForm(Form):
 
         # Create a StarRating component with 5 stars
         star_rating = StarRating("stars", 5)
-    
+
         # Add the star rating component as a custom component
         self.add_custom_component(star_rating.render_html())
         print(html)

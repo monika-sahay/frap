@@ -15,20 +15,20 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
         print("Received GET request:", self.path)
         breakpoint()
         environ = {
-            'REQUEST_METHOD': self.command,
-            'PATH_INFO': self.path,
-            'SERVER_PROTOCOL': 'HTTP/1.1',
-            'wsgi.version': (1, 0),
-            'wsgi.url_scheme': 'http',
-            'wsgi.input': BytesIO(),
-            'wsgi.errors': sys.stderr,
-            'wsgi.multithread': True,
-            'wsgi.multiprocess': True,
-            'wsgi.run_once': False,
-            'HTTP_HOST': self.headers.get('Host'),
-            'SERVER_NAME': self.server.server_address[0],
-            'SERVER_PORT': str(self.server.server_address[1]),
-            'REMOTE_ADDR': self.client_address[0],
+            "REQUEST_METHOD": self.command,
+            "PATH_INFO": self.path,
+            "SERVER_PROTOCOL": "HTTP/1.1",
+            "wsgi.version": (1, 0),
+            "wsgi.url_scheme": "http",
+            "wsgi.input": BytesIO(),
+            "wsgi.errors": sys.stderr,
+            "wsgi.multithread": True,
+            "wsgi.multiprocess": True,
+            "wsgi.run_once": False,
+            "HTTP_HOST": self.headers.get("Host"),
+            "SERVER_NAME": self.server.server_address[0],
+            "SERVER_PORT": str(self.server.server_address[1]),
+            "REMOTE_ADDR": self.client_address[0],
         }
         request = Request(environ)
         breakpoint()
@@ -42,24 +42,24 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def do_POST(self):
         print("Received POST request:", self.path)
-        breakpoint() 
-        content_length = int(self.headers.get('Content-Length', 0))
+        breakpoint()
+        content_length = int(self.headers.get("Content-Length", 0))
         request_data = self.rfile.read(content_length)
         environ = {
-            'REQUEST_METHOD': self.command,
-            'PATH_INFO': self.path,
-            'SERVER_PROTOCOL': 'HTTP/1.1',
-            'wsgi.version': (1, 0),
-            'wsgi.url_scheme': 'http',
-            'wsgi.input': BytesIO(request_data),
-            'wsgi.errors': sys.stderr,
-            'wsgi.multithread': True,
-            'wsgi.multiprocess': True,
-            'wsgi.run_once': False,
-            'HTTP_HOST': self.headers.get('Host'),
-            'SERVER_NAME': self.server.server_address[0],
-            'SERVER_PORT': str(self.server.server_address[1]),
-            'REMOTE_ADDR': self.client_address[0],
+            "REQUEST_METHOD": self.command,
+            "PATH_INFO": self.path,
+            "SERVER_PROTOCOL": "HTTP/1.1",
+            "wsgi.version": (1, 0),
+            "wsgi.url_scheme": "http",
+            "wsgi.input": BytesIO(request_data),
+            "wsgi.errors": sys.stderr,
+            "wsgi.multithread": True,
+            "wsgi.multiprocess": True,
+            "wsgi.run_once": False,
+            "HTTP_HOST": self.headers.get("Host"),
+            "SERVER_NAME": self.server.server_address[0],
+            "SERVER_PORT": str(self.server.server_address[1]),
+            "REMOTE_ADDR": self.client_address[0],
         }
         request = Request(environ)
         # response = App.handle_request(request)
@@ -71,7 +71,7 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(response.data)
 
 
-if __name__ == '__main__':
-    server_address = ('', 4000)
+if __name__ == "__main__":
+    server_address = ("", 4000)
     httpd = HTTPServer(server_address, CustomRequestHandler)
     httpd.serve_forever()

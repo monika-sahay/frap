@@ -20,8 +20,7 @@ Date:
 from app.routes import app  # Import your app instance
 
 if __name__ == '__main__':
-    host = '0.0.0.0'  # Set your desired host
-    port = 8000  # Set your desired port
+    HOST = '0.0.0.0'  # Set your desired host
+    PORT = 8000  # Set your desired port
     # run_threaded(app, host, port)
     app.run_server()
-
