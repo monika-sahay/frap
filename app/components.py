@@ -1,5 +1,33 @@
 # components.py
+"""
+Custom HTML and CSS components for building web interfaces.
+
+This module defines several classes for creating customizable HTML and CSS components,
+including forms, buttons, sliders, star ratings, sidebars, and navigation bars.
+
+Classes:
+    - CustomSlider: Represents a customizable slider element.
+    - Form: Represents an HTML form with customizable fields and buttons.
+    - Button: Represents an HTML button.
+    - LoginForm: Represents a login form derived from the Form class.
+    - StarRating: Represents a star rating component.
+    - Sidebar: Represents a customizable sidebar in HTML.
+    - Navbar: Represents a simple HTML/CSS navbar.
+    - FeedbackForm: Represents a feedback form derived from the Form class.
+"""
+
+
 class CustomSlider:
+    """
+    A class representing a custom slider element.
+
+    Attributes:
+        label (str): The label or description for the slider.
+        min_value (int): The minimum value of the slider.
+        max_value (int): The maximum value of the slider.
+        default_value (int): The initial or default value of the slider.
+        step (int): The step size for incrementing or decrementing the slider value.
+    """
     def __init__(self, label, min_value, max_value, default_value, step):
         """
         Initialize a CustomSlider instance.
@@ -55,7 +83,27 @@ class CustomSlider:
 
 
 class Form:
+    """
+    A class representing an HTML form with customizable fields and buttons.
+
+    Attributes:
+        action (str): The action attribute of the form specifying where to send the form-data when the form is submitted.
+        method (str): The HTTP method to be used when sending form-data.
+        fields (list): A list of dictionaries, each representing a field in the form.
+        buttons (list): A list of Button instances representing buttons in the form.
+        custom_components (list): A list of custom HTML components to be included in the form.
+    """
+
     def __init__(self, action, method="POST"):
+        """
+        Initializes the Form instance with the provided parameters.
+
+        Args:
+            action (str): The action attribute of the form specifying
+            where to send the form-data when the form is submitted.
+            method (str, optional): The HTTP method to be used
+            when sending form-data. Defaults to "POST".
+        """
         self.action = action
         self.method = method
         self.fields = []
@@ -63,17 +111,44 @@ class Form:
         self.custom_components = []
 
     def add_field(self, label, name, input_type="text"):
+        """
+        Adds a field to the form.
+
+        Args:
+            label (str): The label for the field.
+            name (str): The name attribute of the input field.
+            input_type (str, optional): The type of the input field. Defaults to "text".
+        """
         field = {"label": label, "name": name, "type": input_type}
         self.fields.append(field)
 
     def add_button(self, label, button_type="submit"):
+        """
+        Adds a button to the form.
+
+        Args:
+            label (str): The label for the button.
+            button_type (str, optional): The type of the button. Defaults to "submit".
+        """
         button = Button(label, button_type)
         self.buttons.append(button)
 
     def add_custom_component(self, custom_html):
+        """
+        Adds custom HTML components to the form.
+
+        Args:
+            custom_html (str): Custom HTML component to be included in the form.
+        """
         self.custom_components.append(custom_html)
 
     def render_html(self):
+        """
+        Renders the HTML representation of the form.
+
+        Returns:
+            str: HTML representation of the form.
+        """
         html = f"""
             <form action="{self.action}" method="{self.method}" class="dynamic-form">
         """
@@ -181,11 +256,32 @@ class Form:
 
 
 class Button:
+    """
+    A class representing an HTML button.
+
+    Attributes:
+        label (str): The label or text displayed on the button.
+        button_type (str): The type of the button.
+    """
+
     def __init__(self, label, button_type="submit"):
+        """
+        Initializes the Button instance with the provided parameters.
+
+        Args:
+            label (str): The label or text displayed on the button.
+            button_type (str, optional): The type of the button. Defaults to "submit".
+        """
         self.label = label
         self.button_type = button_type
 
     def render_html(self):
+        """
+        Renders the HTML representation of the button.
+
+        Returns:
+            str: HTML representation of the button.
+        """
         html = f"""
             <button type="{self.button_type}" class="btn btn-primary">{self.label}</button>
         """
@@ -347,6 +443,22 @@ class StarRating:
 
 
 class Sidebar:
+    """
+    A class representing a customizable sidebar in HTML.
+
+    Attributes:
+        items (list): A list of dictionaries, each representing an item in the sidebar.
+        width (int): The width of the sidebar in pixels.
+        background_color (str): Background color of the sidebar in hexadecimal format.
+        text_color (str): Text color of the items in the sidebar in hexadecimal format.
+        hover_color (str): Color of the item when hovered in hexadecimal format.
+        orientation (str): The orientation of the sidebar, either 'vertical' or 'horizontal'.
+        top (int or None): The CSS 'top' property for the sidebar. None if not set.
+        left (int or None): The CSS 'left' property for the sidebar. None if not set.
+        right (int or None): The CSS 'right' property for the sidebar. None if not set.
+        bottom (int or None): The CSS 'bottom' property for the sidebar. None if not set.
+    """
+
     def __init__(
         self,
         items,
@@ -360,6 +472,21 @@ class Sidebar:
         right=None,
         bottom=None,
     ):
+        """
+        Initializes the Sidebar instance with the provided parameters.
+
+        Args:
+            items (list): A list of dictionaries, each representing an item in the sidebar.
+            width (int, optional): The width of the sidebar in pixels. Defaults to 200.
+            background_color (str, optional): Background color of the sidebar. Defaults to "#f5f5f5".
+            text_color (str, optional): Text color of the items in the sidebar. Defaults to "#818181".
+            hover_color (str, optional): Color of the item when hovered. Defaults to "#f1f1f1".
+            orientation (str, optional): The orientation of the sidebar. Defaults to "vertical".
+            top (int or None, optional): The CSS 'top' property for the sidebar. Defaults to None.
+            left (int or None, optional): The CSS 'left' property for the sidebar. Defaults to None.
+            right (int or None, optional): The CSS 'right' property for the sidebar. Defaults to None.
+            bottom (int or None, optional): The CSS 'bottom' property for the sidebar. Defaults to None.
+        """
         self.items = items
         self.width = width
         self.background_color = background_color
@@ -372,6 +499,12 @@ class Sidebar:
         self.bottom = bottom
 
     def render_html(self):
+        """
+        Renders the HTML representation of the sidebar.
+
+        Returns:
+            str: HTML representation of the sidebar.
+        """
         sidebar_html = f'<div class="sidebar" style="width: {self.width}px; background-color: {self.background_color};'
         if self.top is not None:
             sidebar_html += f" top: {self.top}px;"
@@ -387,11 +520,21 @@ class Sidebar:
             sidebar_html += '">'
 
         for item in self.items:
-            sidebar_html += f'<a href="{item["url"]}" style="color: {self.text_color}; display: block; text-decoration: none; padding: 6px 8px 6px 16px;">{item["label"]}</a>'
+            sidebar_html += f"""<a href="{item["url"]}"
+                            style="color: {self.text_color};
+                            display: block;
+                            text-decoration: none;
+                            padding: 6px 8px 6px 16px;">{item["label"]}</a>"""
         sidebar_html += "</div>"
         return sidebar_html
 
     def render_css(self):
+        """
+        Generate CSS styles for the sidebar.
+
+        Returns:
+            str: A string containing CSS styles for the sidebar.
+        """
         sidebar_css = f"""
         .sidebar {{
             position: fixed;
@@ -419,26 +562,60 @@ class Sidebar:
 
 
 class Navbar:
+    """
+    A class representing a simple HTML/CSS navbar.
+
+    Attributes:
+        items (list): A list of dictionaries, each representing an item in the navbar.
+        background_color (str): Background color of the navbar in hexadecimal format.
+        text_color (str): Text color of the items in the navbar in hexadecimal format.
+        hover_color (str): Color of the item when hovered in hexadecimal format.
+    """
+
     def __init__(
         self, items, background_color="#333", text_color="#fff", hover_color="#4CAF50"
     ):
+        """
+        Initializes the Navbar instance with provided parameters.
+
+        Args:
+            items (list): A list of dictionaries, each representing an item in the navbar.
+            background_color (str, optional): Background color of the navbar. Defaults to "#333".
+            text_color (str, optional): Text color of the items in the navbar. Defaults to "#fff".
+            hover_color (str, optional): Color of the item when hovered. Defaults to "#4CAF50".
+        """
         self.items = items
         self.background_color = background_color
         self.text_color = text_color
         self.hover_color = hover_color
 
     def render_html(self):
+        """
+        Renders the HTML representation of the navbar.
+
+        Returns:
+            str: HTML representation of the navbar.
+        """
         navbar_html = '<div class="navbar" style="background-color: {};">'.format(
             self.background_color
         )
         for item in self.items:
-            navbar_html += '<a href="{}" style="color: {}; padding: 14px 16px; text-decoration: none;">{}</a>'.format(
+            navbar_html += """<a href="{}"
+                            style="color: {};
+                            padding: 14px 16px;
+                            text-decoration: none;">{}</a>""".format(
                 item["url"], self.text_color, item["label"]
             )
         navbar_html += "</div>"
         return navbar_html
 
     def render_css(self):
+        """
+        Renders the CSS representation of the navbar.
+
+        Returns:
+            str: CSS representation of the navbar.
+        """
         navbar_css = f"""
             .navbar {{
                 overflow: hidden;
@@ -462,7 +639,9 @@ class Navbar:
 
 
 # class Sidebar:
-#     def __init__(self, items, width=200, background_color="#f5f5f5", text_color="#818181", hover_color="#f1f1f1", orientation="vertical"):
+#     def __init__(self, items, width=200, background_color="#f5f5f5",
+#                   text_color="#818181", hover_color="#f1f1f1",
+#                   orientation="vertical"):
 #         self.items = items
 #         self.width = width
 #         self.background_color = background_color
@@ -471,14 +650,19 @@ class Navbar:
 #         self.orientation = orientation
 
 #     def render_html(self):
-#         sidebar_html = f'<div class="sidebar" style="width: {self.width}px; background-color: {self.background_color};'
+#         sidebar_html = f'<div class="sidebar" style="width: {self.width}px;
+#          background-color: {self.background_color};'
 #         if self.orientation == "horizontal":
 #             sidebar_html += ' display: flex; flex-direction: row;">'
 #         else:
 #             sidebar_html += '">'
 
 #         for item in self.items:
-#             sidebar_html += f'<a href="{item["url"]}" style="color: {self.text_color}; display: block; text-decoration: none; padding: 6px 8px 6px 16px;">{item["label"]}</a>'
+#             sidebar_html += f'<a href="{item["url"]}"
+#               style="color: {self.text_color};
+#               display: block;
+#               text-decoration: none;
+#               padding: 6px 8px 6px 16px;">{item["label"]}</a>'
 #         sidebar_html += '</div>'
 #         return sidebar_html
 
@@ -487,11 +671,16 @@ class Navbar:
 #         .sidebar {{
 #             position: fixed;
 #             top: 0;
-#             { "height: 100%;" if self.orientation == "vertical" else "height: auto;" }
-#             { "width: " + str(self.width) + "px;" if self.orientation == "vertical" else "width: 100%;" }
-#             { "flex-direction: column;" if self.orientation == "vertical" else "flex-direction: row;" }
+#             { "height: 100%;" if self.orientation == "vertical"
+#               else "height: auto;" }
+#             { "width: " + str(self.width) + "px;"
+#               if self.orientation == "vertical"
+#               else "width: 100%;" }
+#             { "flex-direction: column;" if self.orientation == "vertical"
+#                else "flex-direction: row;" }
 #             background-color: {self.background_color};
-#             { "overflow-x: hidden;" if self.orientation == "vertical" else "overflow-y: hidden;" }
+#             { "overflow-x: hidden;" if self.orientation == "vertical"
+#                else "overflow-y: hidden;" }
 #             padding-top: 0px;
 #         }}
 
@@ -505,7 +694,11 @@ class Navbar:
 #         '''
 #         return sidebar_css
 # class Sidebar:
-#     def __init__(self, items, width=200, background_color="#f3f3f3", text_color="#818181", hover_color="#f1f1f1"):
+#     def __init__(self, items,
+#                  width=200,
+#                  background_color="#f3f3f3",
+#                  text_color="#818181",
+#                  hover_color="#f1f1f1"):
 #         self.items = items
 #         self.width = width
 #         self.background_color = background_color
@@ -548,6 +741,14 @@ class Navbar:
 
 
 class FeedbackForm(Form):
+    """
+    A class representing a feedback form, derived from the Form class.
+
+    Attributes:
+        action (str): The URL to which the form should submit.
+        method (str): The HTTP method to be used for form submission.
+    """
+
     def __init__(self, action, method="POST"):
         """
         Initialize a FeedbackForm instance.
@@ -577,7 +778,8 @@ class FeedbackForm(Form):
         Returns:
         - str: A string containing HTML markup for the feedback form.
         """
-        # Combine the HTML markup of the feedback form with the custom components and submit button
+        # Combine the HTML markup of the feedback form with
+        # the custom components and submit button
         html = super().render_html()
 
         # Create a StarRating component with 5 stars
