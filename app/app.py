@@ -162,8 +162,7 @@ class App:
             url_pattern = self.url_map[endpoint]
             url = url_pattern.format(**values)
             return url
-        else:
-            raise ValueError(f"Endpoint '{endpoint}' not found in URL rules")
+        raise ValueError(f"Endpoint '{endpoint}' not found in URL rules")
 
     def run_server(self, host='0.0.0.0', port=8000):
         """
@@ -195,5 +194,5 @@ class App:
 
 
 if __name__ == '__main__':
-    app = App()
+    app = App(__name__)
     app.run()
