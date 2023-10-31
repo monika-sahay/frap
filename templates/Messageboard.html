@@ -1,9 +1,6 @@
 <!DOCTYPE html>
   <title>Message Board</title>
-  <style>
-    {{ my_form.render_css() }}
-</style>
-  {{  my_form.render_html() }}
+
   <form method="POST" action="{{ message_url }}">
     <textarea name="message"></textarea>
     <br>
