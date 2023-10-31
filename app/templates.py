@@ -22,8 +22,9 @@ Dependencies:
 
 """
 # templates.py
-from jinja2 import Environment, FileSystemLoader
 import os
+from jinja2 import Environment, FileSystemLoader
+
 
 # Define the template directory path
 template_dir = os.path.join(os.path.dirname(__file__), "../templates")
