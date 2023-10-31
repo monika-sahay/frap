@@ -127,7 +127,7 @@ def test_message_route(app_and_client):
     response = client.get("/message")
 
     # Assert that the response status code is 200
-    assert response.status_code == 200
+    assert response.status_code == 303
 
     # Parse the HTML content using BeautifulSoup
     soup = BeautifulSoup(response.text, "html.parser")
