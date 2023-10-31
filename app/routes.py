@@ -78,6 +78,15 @@ feedback_form.add_button("Submit")
 
 @app.route("/")
 def handle_query(request):
+    """
+    Handle the query request.
+
+    Args:
+    - request: The request object.
+
+    Returns:
+    - Response: The response containing the rendered template.
+    """
     slider_component = CustomSlider("Slider", 0, 100, 50, 1)
     star = StarRating("rating", 5)
     custom_slider_html = slider_component.render_html()
@@ -98,6 +107,15 @@ def handle_query(request):
 
 @app.route("/login", methods=["POST", "GET"])
 def login(request):
+    """
+    Handle the login request.
+
+    Args:
+    - request: The request object.
+
+    Returns:
+    - Response: The response containing the rendered template.
+    """
     form_elements = [
         {"label": "Username", "name": "username", "type": "text"},
         {"label": "Password", "name": "pw", "type": "password"},
@@ -116,10 +134,14 @@ def login(request):
     navbar = Navbar(
         navbar_items, background_color="#333", text_color="#fff", hover_color="#4CAF50"
     )
-    # sidebar = Sidebar(sidebar_items, width=200, background_color="#f3f3f3", text_color="#818181", hover_color="#f1f1f1")
-    # sidebar = Sidebar(sidebar_items, width=1280, background_color="#f5f5f5", text_color="#007bff", hover_color="#b0b0b0", orientation="horizontal")
+    # sidebar = Sidebar(sidebar_items, width=200, background_color="#f3f3f3",
+    #  text_color="#818181", hover_color="#f1f1f1")
+    # sidebar = Sidebar(sidebar_items, width=1280, background_color="#f5f5f5",
+    # text_color="#007bff", hover_color="#b0b0b0", orientation="horizontal")
     # vertical_sidebar = Sidebar(sidebar_items)
-    # sidebar_horizontal = Sidebar(sidebar_items, width=1250, background_color="#f5f5f5", text_color="#818181", hover_color="#f1f1f1", orientation="horizontal", top=0, left=0, right=None, bottom=None)
+    # sidebar_horizontal = Sidebar(sidebar_items, width=1250,
+    # background_color="#f5f5f5", text_color="#818181", hover_color="#f1f1f1",
+    #  orientation="horizontal", top=0, left=0, right=None, bottom=None)
     sidebar_vertical = Sidebar(
         sidebar_items,
         width=200,
@@ -154,6 +176,15 @@ messageBoard = []
 
 @app.route("/message", methods=["POST", "GET"])
 def message(request):
+    """
+    Handle the message request.
+
+    Args:
+    - request: The request object.
+
+    Returns:
+    - Response: The response containing the rendered template.
+    """
     my_form = Form(action="/message", method="POST")
     # Add form fields
     my_form.add_field(label="Name", name="name", input_type="text")
@@ -185,6 +216,15 @@ def message(request):
 
 @app.route("/submit", methods=["POST"])
 def submit(request):
+    """
+    Handle the submit request.
+
+    Args:
+    - request: The request object.
+
+    Returns:
+    - Response: The response containing the response text.
+    """
     slider_value = request.form.get("Slider")
     print(slider_value)
     # Process the slider value here
@@ -198,6 +238,15 @@ def submit(request):
 
 @app.route("/submit_feedback", methods=["POST"])
 def submit_feedback(request):
+    """
+    Handle the submit feedback request.
+
+    Args:
+    - request: The request object.
+
+    Returns:
+    - Response: The response containing the rendered template.
+    """
     if request.method == "POST":
         # Retrieve form field values
         name = request.form.get("name")
