@@ -1,0 +1,8 @@
+[tool.flake8]
+max-line-length = 120
+extend-ignore = "E203, W503"
+exclude = ".git,__pycache__,old,build,dist,env"
+
+[tool.pylint]
+init-hook = "import os; import sys; sys.path.insert(0, os.path.abspath(os.getcwd()))"
+max-line-length = 129
