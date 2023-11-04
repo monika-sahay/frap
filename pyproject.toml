@@ -11,4 +11,3 @@ exclude = ".git,__pycache__,old,build,dist,env"
 init-hook = "import os; import sys; sys.path.insert(0, os.path.abspath(os.getcwd()))"
 max-line-length = 129
 ignore-patterns = ["^frap/tests/test_frap\\.py$"]
-ignore = frap.tests
