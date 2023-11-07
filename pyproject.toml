@@ -1,6 +1,19 @@
+[tool.poetry]
+name = "frap"
+version = "0.0.0"
+description = "light weight web framework."
+authors = ["Monika Monika <monika_sahay@yahoo.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.dev-dependencies]
+pylint = "^3.0"
+pytest = "^7.4"
+
 [build-system]
-requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=6.0"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.flake8]
 max-line-length = 120
@@ -8,6 +21,9 @@ extend-ignore = "E203, W503"
 exclude = ".git,__pycache__,old,build,dist,env"
 
 [tool.pylint.MASTER]
-init-hook = "import os; import sys; sys.path.insert(0, os.path.abspath(os.getcwd()))"
+# init-hook = "import os; import sys; sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.dirname(__file__))))"
 max-line-length = 129
 ignore-patterns = ["^frap/tests/test_frap\\.py$"]
+
+[tool.poetry.files]
+include = ["frap/**"]
