@@ -1,6 +1,6 @@
 FROM python:3.11.4 
 WORKDIR /frap 
-COPY . /frap 
+COPY . /frap/frap 
 RUN pip install --upgrade pip && \ 
     pip install -r requirements.txt && \ 
     python -m build --sdist --wheel ./ && \ 
