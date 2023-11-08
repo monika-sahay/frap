@@ -2,7 +2,7 @@ FROM python:3.11.4
 WORKDIR /frap 
 COPY . /frap/frap 
 RUN pip install --upgrade pip && \ 
-    pip install -r requirements.txt && \ 
+    pip install -r frap/requirements.txt && \ 
     python -m build --sdist --wheel ./ && \ 
     pip install dist/frap-0.0.0-py3-none-any.whl
 
