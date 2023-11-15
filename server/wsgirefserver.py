@@ -1,6 +1,10 @@
+'''
+module for development server
+'''
+
 from wsgiref.simple_server import make_server
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
-from app.app import app
+from frap.app.app import app
 
 # Create a WSGI dispatcher that combines multiple apps
 # dispatcher = DispatcherMiddleware(app)
