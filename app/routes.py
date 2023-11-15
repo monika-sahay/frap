@@ -40,12 +40,10 @@ Dependencies:
 """
 
 # routes.py
-from frap.app.app import App  # Import the App class from the app package
-from frap.app.templates import (
-    render_template,
-)  # Import the render_template function from the app package
-from frap.app.responses import redirect  # Import the redirect function from the app package
 from werkzeug.wrappers import Response
+from frap.app.app import App  # Import the App class from the app package
+from frap.app.templates import render_template  # Import the render_template function from the app package
+from frap.app.responses import redirect  # Import the redirect function from the app package
 from frap.app.components import CustomSlider, LoginForm, Form, StarRating, Sidebar, Navbar
 
 # from werkzeug.utils import redirect
@@ -77,7 +75,7 @@ feedback_form.add_button("Submit")
 
 
 @app.route("/")
-def handle_query(request):
+def handle_query():
     """
     Handle the query request.
 
