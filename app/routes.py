@@ -40,13 +40,13 @@ Dependencies:
 """
 
 # routes.py
-from app.app import App  # Import the App class from the app package
-from app.templates import (
+from frap.app.app import App  # Import the App class from the app package
+from frap.app.templates import (
     render_template,
 )  # Import the render_template function from the app package
-from app.responses import redirect  # Import the redirect function from the app package
+from frap.app.responses import redirect  # Import the redirect function from the app package
 from werkzeug.wrappers import Response
-from app.components import CustomSlider, LoginForm, Form, StarRating, Sidebar, Navbar
+from frap.app.components import CustomSlider, LoginForm, Form, StarRating, Sidebar, Navbar
 
 # from werkzeug.utils import redirect
 
