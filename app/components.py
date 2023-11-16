@@ -28,7 +28,7 @@ class CustomSlider:
         default_value (int): The initial or default value of the slider.
         step (int): The step size for incrementing or decrementing the slider value.
     """
-    def __init__(self, label, min_value, max_value, default_value, step):
+    def __init__(self, slider_config):
         """
         Initialize a CustomSlider instance.
 
@@ -40,11 +40,11 @@ class CustomSlider:
         - step (int): The step size for incrementing or decrementing the
             slider value.
         """
-        self.label = label
-        self.min_value = min_value
-        self.max_value = max_value
-        self.default_value = default_value
-        self.step = step
+        self.label = slider_config["label"]
+        self.min_value = slider_config["min_value"]
+        self.max_value = slider_config["max_value"]
+        self.default_value = slider_config["default_value"]
+        self.step = slider_config["step"]
 
     def render_html(self):
         """
@@ -176,49 +176,46 @@ class Form:
         """
         return html
 
-    def render_css(
-        self,
-        width="50%",
-        margin_top="50px",
-        left="auto",
-        right="auto",
-        top="auto",
-        bottom="auto",
-        z_index="auto",
-        overlap=False,
-    ):
+    def render_css(self, style_properties=None):
         """
         Generate CSS styles for the dynamic form.
 
         Parameters:
-        - width (str): The width of the form.
-        - margin_top (str): The top margin of the form.
-        - left (str): The CSS 'left' property for the form.
-        - right (str): The CSS 'right' property for the form.
-        - top (str): The CSS 'top' property for the form.
-        - bottom (str): The CSS 'bottom' property for the form.
-        - z_index (str): The CSS 'z-index' property for the form.
-        - overlap (bool): Whether the form should overlap other elements.
+        - style_properties (dict): A dictionary containing CSS style properties for the form.
 
         Returns:
         - str: A string containing CSS styles for the dynamic form.
         """
-        overlap_value = "hidden" if overlap else "visible"
+        default_style = {
+            "width": "50%",
+            "margin_top": "50px",
+            "left": "auto",
+            "right": "auto",
+            "top": "auto",
+            "bottom": "auto",
+            "z_index": "auto",
+            "overlap": False,
+        }
+        
+        if style_properties is not None: 
+            # Update the default style with user-provided values 
+            default_style.update(style_properties)
+        overlap_value = "hidden" if default_style["overlap"] else "visible"
         css = f"""
             /* Custom styles for the dynamic form */
             .dynamic-form {{
-                width: {width};
+                width: {default_style["width"]};
                 margin: auto;
                 padding: 20px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
-                margin-top: {margin_top};
+                margin-top: {default_style["margin_top"]};
                 position: absolute;
-                left: {left};
-                right: {right};
-                top: {top};
-                bottom: {bottom};
-                z-index: {z_index};
+                left: {default_style["left"]};
+                right: {default_style["right"]};
+                top: {default_style["top"]};
+                bottom: {default_style["bottom"]};
+                z-index: {default_style["z_index"]};
                 visibility: {overlap_value};
                 background-color: #f2f2f2;
             }}
@@ -636,108 +633,6 @@ class Navbar:
             }}
         """
         return navbar_css
-
-
-# class Sidebar:
-#     def __init__(self, items, width=200, background_color="#f5f5f5",
-#                   text_color="#818181", hover_color="#f1f1f1",
-#                   orientation="vertical"):
-#         self.items = items
-#         self.width = width
-#         self.background_color = background_color
-#         self.text_color = text_color
-#         self.hover_color = hover_color
-#         self.orientation = orientation
-
-#     def render_html(self):
-#         sidebar_html = f'<div class="sidebar" style="width: {self.width}px;
-#          background-color: {self.background_color};'
-#         if self.orientation == "horizontal":
-#             sidebar_html += ' display: flex; flex-direction: row;">'
-#         else:
-#             sidebar_html += '">'
-
-#         for item in self.items:
-#             sidebar_html += f'<a href="{item["url"]}"
-#               style="color: {self.text_color};
-#               display: block;
-#               text-decoration: none;
-#               padding: 6px 8px 6px 16px;">{item["label"]}</a>'
-#         sidebar_html += '</div>'
-#         return sidebar_html
-
-#     def render_css(self):
-#         sidebar_css = f'''
-#         .sidebar {{
-#             position: fixed;
-#             top: 0;
-#             { "height: 100%;" if self.orientation == "vertical"
-#               else "height: auto;" }
-#             { "width: " + str(self.width) + "px;"
-#               if self.orientation == "vertical"
-#               else "width: 100%;" }
-#             { "flex-direction: column;" if self.orientation == "vertical"
-#                else "flex-direction: row;" }
-#             background-color: {self.background_color};
-#             { "overflow-x: hidden;" if self.orientation == "vertical"
-#                else "overflow-y: hidden;" }
-#             padding-top: 0px;
-#         }}
-
-#         .sidebar a {{
-#             color: {self.text_color};
-#         }}
-
-#         .sidebar a:hover {{
-#             color: {self.hover_color};
-#         }}
-#         '''
-#         return sidebar_css
-# class Sidebar:
-#     def __init__(self, items,
-#                  width=200,
-#                  background_color="#f3f3f3",
-#                  text_color="#818181",
-#                  hover_color="#f1f1f1"):
-#         self.items = items
-#         self.width = width
-#         self.background_color = background_color
-#         self.text_color = text_color
-#         self.hover_color = hover_color
-
-#     def render_html(self):
-#         sidebar_html = '<div class="sidebar">'
-#         for item in self.items:
-#             sidebar_html += f'<a href="{item["url"]}">{item["label"]}</a>'
-#         sidebar_html += '</div>'
-#         return sidebar_html
-
-#     def render_css(self):
-#         sidebar_css = f'''
-#         .sidebar {{
-#             height: 100%;
-#             width: {self.width}px;
-#             position: fixed;
-#             top: 0;
-#             left: 0;
-#             background-color: {self.background_color};
-#             overflow-x: hidden;
-#             padding-top: 20px;
-#         }}
-
-#         .sidebar a {{
-#             padding: 6px 8px 6px 16px;
-#             text-decoration: none;
-#             font-size: 25px;
-#             color: {self.text_color};
-#             display: block;
-#         }}
-
-#         .sidebar a:hover {{
-#             color: {self.hover_color};
-#         }}
-#         '''
-#         return sidebar_css
 
 
 class FeedbackForm(Form):
