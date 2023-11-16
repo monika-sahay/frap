@@ -283,6 +283,7 @@ class Button:
             <button type="{self.button_type}" class="btn btn-primary">{self.label}</button>
         """
         return html
+    # pylint: disable=too-few-public-methods
 
 
 class LoginForm(Form):
