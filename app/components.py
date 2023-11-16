@@ -15,6 +15,8 @@ Classes:
     - Navbar: Represents a simple HTML/CSS navbar.
     - FeedbackForm: Represents a feedback form derived from the Form class.
 """
+from dataclasses import dataclass
+from typing import List, Optional
 
 
 class CustomSlider:
@@ -440,61 +442,34 @@ class StarRating:
         return html
 
 
+@dataclass
 class Sidebar:
     """
     A class representing a customizable sidebar in HTML.
 
     Attributes:
-        items (list): A list of dictionaries, each representing an item in the sidebar.
+        items (List[dict]): A list of dictionaries, each representing an item in the sidebar.
         width (int): The width of the sidebar in pixels.
         background_color (str): Background color of the sidebar in hexadecimal format.
         text_color (str): Text color of the items in the sidebar in hexadecimal format.
         hover_color (str): Color of the item when hovered in hexadecimal format.
         orientation (str): The orientation of the sidebar, either 'vertical' or 'horizontal'.
-        top (int or None): The CSS 'top' property for the sidebar. None if not set.
-        left (int or None): The CSS 'left' property for the sidebar. None if not set.
-        right (int or None): The CSS 'right' property for the sidebar. None if not set.
-        bottom (int or None): The CSS 'bottom' property for the sidebar. None if not set.
+        top (Optional[int]): The CSS 'top' property for the sidebar. None if not set.
+        left (Optional[int]): The CSS 'left' property for the sidebar. None if not set.
+        right (Optional[int]): The CSS 'right' property for the sidebar. None if not set.
+        bottom (Optional[int]): The CSS 'bottom' property for the sidebar. None if not set.
     """
 
-    def __init__(
-        self,
-        items,
-        width=200,
-        background_color="#f5f5f5",
-        text_color="#818181",
-        hover_color="#f1f1f1",
-        orientation="vertical",
-        top=None,
-        left=None,
-        right=None,
-        bottom=None,
-    ):
-        """
-        Initializes the Sidebar instance with the provided parameters.
-
-        Args:
-            items (list): A list of dictionaries, each representing an item in the sidebar.
-            width (int, optional): The width of the sidebar in pixels. Defaults to 200.
-            background_color (str, optional): Background color of the sidebar. Defaults to "#f5f5f5".
-            text_color (str, optional): Text color of the items in the sidebar. Defaults to "#818181".
-            hover_color (str, optional): Color of the item when hovered. Defaults to "#f1f1f1".
-            orientation (str, optional): The orientation of the sidebar. Defaults to "vertical".
-            top (int or None, optional): The CSS 'top' property for the sidebar. Defaults to None.
-            left (int or None, optional): The CSS 'left' property for the sidebar. Defaults to None.
-            right (int or None, optional): The CSS 'right' property for the sidebar. Defaults to None.
-            bottom (int or None, optional): The CSS 'bottom' property for the sidebar. Defaults to None.
-        """
-        self.items = items
-        self.width = width
-        self.background_color = background_color
-        self.text_color = text_color
-        self.hover_color = hover_color
-        self.orientation = orientation
-        self.top = top
-        self.left = left
-        self.right = right
-        self.bottom = bottom
+    items: List[dict]
+    width: int
+    background_color: str
+    text_color: str
+    hover_color: str
+    orientation: str
+    top: Optional[int] = None
+    left: Optional[int] = None
+    right: Optional[int] = None
+    bottom: Optional[int] = None
 
     def render_html(self):
         """
@@ -594,16 +569,12 @@ class Navbar:
         Returns:
             str: HTML representation of the navbar.
         """
-        navbar_html = '<div class="navbar" style="background-color: {};">'.format(
-            self.background_color
-        )
+        navbar_html = f'<div class="navbar" style="background-color: {self.background_color};">'
         for item in self.items:
-            navbar_html += """<a href="{}"
-                            style="color: {};
+            navbar_html += f"""<a href="{item["url"]}"
+                            style="color: {self.text_color};
                             padding: 14px 16px;
-                            text-decoration: none;">{}</a>""".format(
-                item["url"], self.text_color, item["label"]
-            )
+                            text-decoration: none;">{item["label"]}</a>"""
         navbar_html += "</div>"
         return navbar_html
 
