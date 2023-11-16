@@ -196,9 +196,9 @@ class Form:
             "z_index": "auto",
             "overlap": False,
         }
-        
-        if style_properties is not None: 
-            # Update the default style with user-provided values 
+
+        if style_properties is not None:
+            # Update the default style with user-provided values
             default_style.update(style_properties)
         overlap_value = "hidden" if default_style["overlap"] else "visible"
         css = f"""
