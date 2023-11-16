@@ -284,7 +284,6 @@ class Button:
             <button type="{self.button_type}" class="btn btn-primary">{self.label}</button>
         """
         return html
-    
 
 
 class LoginForm(Form):
