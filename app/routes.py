@@ -94,8 +94,7 @@ def handle_query():
         "min_value": 0,
         "max_value": 100,
         "default_value": 50,
-        "step": 1,
-        }
+        "step": 1, }
     slider_component = CustomSlider(slider_config)
     star = StarRating("rating", 5)
     custom_slider_html = slider_component.render_html()
@@ -147,8 +146,7 @@ def login(request):
                            hover_color="#999",
                            orientation="horizontal",
                            top=20,
-                           left=10),
-        )
+                           left=10), )
     if request.method == "POST":
         login_data = request.form
         username = login_data.get("username")
