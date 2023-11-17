@@ -44,7 +44,11 @@ from werkzeug.wrappers import Response
 from frap.app.app import App  # Import the App class from the app package
 from frap.app.templates import render_template  # Import the render_template function from the app package
 from frap.app.responses import redirect  # Import the redirect function from the app package
-from frap.app.components import CustomSlider, LoginForm, Form, StarRating, Sidebar, Navbar
+from frap.components.sidebar import Sidebar, SidebarItem, SidebarStyle
+from frap.components.navbar import Navbar
+from frap.components.forms import LoginForm, Form
+from frap.components.star import StarRating
+from frap.components.slider import CustomSlider
 
 # from werkzeug.utils import redirect
 
@@ -85,7 +89,14 @@ def handle_query():
     Returns:
     - Response: The response containing the rendered template.
     """
-    slider_component = CustomSlider("Slider", 0, 100, 50, 1)
+    slider_config = {
+            "label": "Slider",
+            "min_value": 0,
+            "max_value": 100,
+            "default_value": 50,
+            "step": 1,
+        }
+    slider_component = CustomSlider(slider_config)
     star = StarRating("rating", 5)
     custom_slider_html = slider_component.render_html()
     custom_slider_js = slider_component.render_js()
@@ -119,11 +130,6 @@ def login(request):
         {"label": "Password", "name": "pw", "type": "password"},
     ]
     login_form = LoginForm("/login", form_elements)
-    sidebar_items = [
-        {"url": "/", "label": "Home"},
-        {"url": "/about", "label": "About"},
-        {"url": "/contact", "label": "Contact"},
-    ]
     navbar_items = [
         {"url": "/", "label": "Home"},
         {"url": "/about", "label": "About"},
@@ -132,26 +138,11 @@ def login(request):
     navbar = Navbar(
         navbar_items, background_color="#333", text_color="#fff", hover_color="#4CAF50"
     )
-    # sidebar = Sidebar(sidebar_items, width=200, background_color="#f3f3f3",
-    #  text_color="#818181", hover_color="#f1f1f1")
-    # sidebar = Sidebar(sidebar_items, width=1280, background_color="#f5f5f5",
-    # text_color="#007bff", hover_color="#b0b0b0", orientation="horizontal")
-    # vertical_sidebar = Sidebar(sidebar_items)
-    # sidebar_horizontal = Sidebar(sidebar_items, width=1250,
-    # background_color="#f5f5f5", text_color="#818181", hover_color="#f1f1f1",
-    #  orientation="horizontal", top=0, left=0, right=None, bottom=None)
-    sidebar_vertical = Sidebar(
-        sidebar_items,
-        width=200,
-        background_color="#f3f3f3",
-        text_color="#818181",
-        hover_color="#f1f1f1",
-        orientation="vertical",
-        top=50,
-        left=0,
-        right=None,
-        bottom=None,
-    )
+
+    sidebar_instance = Sidebar(
+        items=[SidebarItem(url="/home", label="Home"), SidebarItem(url="/about", label="About")],
+        style=SidebarStyle(width=250, background_color="#ccc", text_color="#333", hover_color="#999", orientation="horizontal", top=20, left=10),
+        )
     if request.method == "POST":
         login_data = request.form
         username = login_data.get("username")
@@ -162,7 +153,7 @@ def login(request):
         render_template(
             "LoginPage.html",
             login_form=login_form,
-            sidebar_vertical=sidebar_vertical,
+            sidebar_vertical=sidebar_instance,
             navbar=navbar,
         ),
         content_type="text/html",

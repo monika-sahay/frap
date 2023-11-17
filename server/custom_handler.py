@@ -1,9 +1,9 @@
-# custom_handler.p
-from werkzeug.wrappers import Request
-from io import BytesIO
-import sys
+# custom_handler.py
 import http.server
 from http.server import HTTPServer
+from io import BytesIO
+import sys
+from werkzeug.wrappers import Request
 
 
 class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -13,7 +13,6 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def do_GET(self):
         print("Received GET request:", self.path)
-        breakpoint()
         environ = {
             "REQUEST_METHOD": self.command,
             "PATH_INFO": self.path,
@@ -31,7 +30,6 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
             "REMOTE_ADDR": self.client_address[0],
         }
         request = Request(environ)
-        breakpoint()
         # response = App.handle_request(request)
         response = self.app_instance.handle_request(request)
         self.send_response(response.status_code)
