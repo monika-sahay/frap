@@ -90,11 +90,11 @@ def handle_query():
     - Response: The response containing the rendered template.
     """
     slider_config = {
-            "label": "Slider",
-            "min_value": 0,
-            "max_value": 100,
-            "default_value": 50,
-            "step": 1,
+        "label": "Slider",
+        "min_value": 0,
+        "max_value": 100,
+        "default_value": 50,
+        "step": 1,
         }
     slider_component = CustomSlider(slider_config)
     star = StarRating("rating", 5)
@@ -141,7 +141,13 @@ def login(request):
 
     sidebar_instance = Sidebar(
         items=[SidebarItem(url="/home", label="Home"), SidebarItem(url="/about", label="About")],
-        style=SidebarStyle(width=250, background_color="#ccc", text_color="#333", hover_color="#999", orientation="horizontal", top=20, left=10),
+        style=SidebarStyle(width=250,
+                           background_color="#ccc",
+                           text_color="#333",
+                           hover_color="#999",
+                           orientation="horizontal",
+                           top=20,
+                           left=10),
         )
     if request.method == "POST":
         login_data = request.form
