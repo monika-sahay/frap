@@ -137,7 +137,7 @@ def login(request):
     navbar = Navbar(
         navbar_items, background_color="#333", text_color="#fff", hover_color="#4CAF50"
     )
-    # flake8: disable=F821
+    # pylint: disable=undefined-variable
     sidebar_instance = Sidebar(
         items=[
             SidebarItem(url="/home", label="Home"),
