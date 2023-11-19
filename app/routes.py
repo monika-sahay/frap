@@ -137,26 +137,26 @@ def login(request):
     navbar = Navbar(
         navbar_items, background_color="#333", text_color="#fff", hover_color="#4CAF50"
     )
-    # pylint: disable=undefined-variable
     sidebar_instance = Sidebar(
         items=[
-            SidebarItem(url="/home", label="Home"),
-            SidebarItem(url="/about", label="About")
-        ],
-        style=SidebarStyle(
-            color_scheme=ColorScheme(
-                background_color="#ccc",
-                text_color="#333",
-                hover_color="#999"
-            ),
-            layout_properties=LayoutProperties(
-                width=250,
-                orientation="horizontal",
-                top=20,
-                left=10
-            )
+            {"url": "/home", "label": "Home"},
+            {"url": "/about", "label": "About"}
+            ],
+        style_config={
+            "color_scheme": {
+                "background_color": "#ccc",
+                "text_color": "#333",
+                "hover_color": "#999"
+                },
+            "layout_properties": {
+                "width": 250,
+                "orientation": "horizontal",
+                "top": 20,
+                "left": 10
+                }
+            }
         )
-    )
+
     if request.method == "POST":
         login_data = request.form
         username = login_data.get("username")
