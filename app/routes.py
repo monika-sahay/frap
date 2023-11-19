@@ -141,21 +141,21 @@ def login(request):
         items=[
             {"url": "/home", "label": "Home"},
             {"url": "/about", "label": "About"}
-            ],
+              ],
         style_config={
             "color_scheme": {
                 "background_color": "#ccc",
                 "text_color": "#333",
                 "hover_color": "#999"
-                },
+                            },
             "layout_properties": {
                 "width": 250,
                 "orientation": "horizontal",
                 "top": 20,
                 "left": 10
-                }
-            }
-        )
+                                }
+                    }
+                            )
 
     if request.method == "POST":
         login_data = request.form
