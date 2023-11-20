@@ -15,7 +15,7 @@ pipeline {
         stage('Linting') {
             steps {
                 sh 'docker run --rm -v $PWD:/frap -w /frap frap:1.0.0 flake8 . --config=setup.cfg'
-                sh 'docker run --rm -v $PWD:/frap -w /frap frap:1.0.0 pylint frap'
+                sh 'docker run --rm -v $PWD:/frap -w /frap frap:1.0.0 pylint --rcfile=.pylintrc frap'
             }
         }
         stage('Testing') {
