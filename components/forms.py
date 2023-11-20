@@ -217,6 +217,16 @@ class Button:
 
 
 class LoginForm(Form):
+    """
+    A class representing an HTML form with customizable fields and buttons.
+
+    Attributes:
+        action (str): The action attribute of the form specifying where to send the form-data when the form is submitted.
+        method (str): The HTTP method to be used when sending form-data.
+        fields (list): A list of dictionaries, each representing a field in the form.
+        buttons (list): A list of Button instances representing buttons in the form.
+        custom_components (list): A list of custom HTML components to be included in the form.
+    """
     def __init__(self, login_url, form_elements=None):
         """
         Initialize a login form instance.
@@ -242,9 +252,9 @@ class LoginForm(Form):
         - str: A string containing HTML markup for the login form.
         """
         # You can add custom HTML here if needed, e.g., additional styling
-        return super().render_html()
+        # return super().render_html()
 
-    def render_css(self):
+    def render_css(self, style_properties):
         """
         Generate CSS styles for the login form.
 

@@ -44,7 +44,7 @@ from werkzeug.wrappers import Response
 from frap.app.app import App  # Import the App class from the app package
 from frap.app.templates import render_template  # Import the render_template function from the app package
 from frap.app.responses import redirect  # Import the redirect function from the app package
-from frap.components.sidebar import Sidebar
+from frap.components.sidebar import sidebar
 from frap.components.navbar import Navbar
 from frap.components.forms import LoginForm, Form
 from frap.components.star import StarRating
@@ -137,25 +137,20 @@ def login(request):
     navbar = Navbar(
         navbar_items, background_color="#333", text_color="#fff", hover_color="#4CAF50"
     )
-    sidebar_instance = Sidebar(
+    sidebar_instance = sidebar(
         items=[
             {"url": "/home", "label": "Home"},
-            {"url": "/about", "label": "About"}
-              ],
+            {"url": "/about", "label": "About"}],
         style_config={
             "color_scheme": {
                 "background_color": "#ccc",
                 "text_color": "#333",
-                "hover_color": "#999"
-                            },
+                "hover_color": "#999"},
             "layout_properties": {
                 "width": 250,
                 "orientation": "horizontal",
                 "top": 20,
-                "left": 10
-                                }
-                    }
-                            )
+                "left": 10}})
 
     if request.method == "POST":
         login_data = request.form

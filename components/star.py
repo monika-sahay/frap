@@ -8,6 +8,7 @@ Classes:
 """
 
 
+# pylint: disable=too-few-public-methods
 class StarRating:
     """
     A class representing a star rating component.
