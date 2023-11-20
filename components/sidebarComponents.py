@@ -1,4 +1,4 @@
-# sidebar.py
+# sidebarcomponents.py
 
 """
 This module defines classes for creating a customizable HTML sidebar.
