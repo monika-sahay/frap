@@ -3,6 +3,7 @@ WORKDIR /frap
 COPY . /frap/frap 
 RUN mv /frap/frap/pyproject.toml /frap/ && \
     mv /frap/frap/setup.cfg /frap/ && \
+    mv /frap/frap/.pylintrc /frap/ && \
     pip install --upgrade pip && \ 
     pip install -r frap/requirements.txt && \ 
     python -m build --sdist --wheel ./ && \ 
