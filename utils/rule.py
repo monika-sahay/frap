@@ -5,6 +5,7 @@ Each rule specifies a URL path, HTTP methods, an endpoint, and a handler functio
 """
 
 
+# pylint: disable=too-few-public-methods
 class Rule:
     """
     Represents a routing rule in a web application.

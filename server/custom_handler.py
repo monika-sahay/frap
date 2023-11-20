@@ -1,4 +1,9 @@
 # custom_handler.py
+"""
+This module provides a custom request handler for an HTTP server.
+"""
+
+
 import http.server
 from http.server import HTTPServer
 from io import BytesIO
@@ -7,11 +12,34 @@ from werkzeug.wrappers import Request
 
 
 class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
+    """
+    Custom request handler for an HTTP server.
+
+    This class extends SimpleHTTPRequestHandler to handle GET and POST requests
+    by forwarding them to an instance of a WSGI application.
+
+    Attributes:
+        app_instance: An instance of the WSGI application to handle the requests.
+    """
+
     def __init__(self, app_instance, *args, **kwargs):
+        """
+        Initialize the CustomRequestHandler.
+
+        Args:
+            app_instance: An instance of the WSGI application to handle the requests.
+        """
         self.app_instance = app_instance
         super().__init__(*args, **kwargs)
 
+    # pylint: disable=C0103
     def do_GET(self):
+        """
+        Handle HTTP GET requests.
+
+        Forwards the GET request to the WSGI application and sends the response
+        back to the client.
+        """
         print("Received GET request:", self.path)
         environ = {
             "REQUEST_METHOD": self.command,
@@ -38,9 +66,15 @@ class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(response.data)
 
+    # pylint: disable=C0103
     def do_POST(self):
+        """
+        Handle HTTP POST requests.
+
+        Forwards the POST request to the WSGI application and sends the response
+        back to the client.
+        """
         print("Received POST request:", self.path)
-        breakpoint()
         content_length = int(self.headers.get("Content-Length", 0))
         request_data = self.rfile.read(content_length)
         environ = {

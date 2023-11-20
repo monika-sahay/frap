@@ -1,8 +1,13 @@
+'''
+Module for testing API endpoints
+'''
+
+
 import pytest
 from werkzeug.test import EnvironBuilder
 from werkzeug.wrappers import Request
-from frap.app.app import App as FrapApp  # Import your original App class
 from werkzeug.test import Client
+from frap.app.app import App as FrapApp  # Import your original App class
 import requests
 from bs4 import BeautifulSoup
 
