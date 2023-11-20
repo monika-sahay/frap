@@ -1,0 +1,3 @@
+[pylint]
+max-line-length = 129
+ignore-paths = ["frap/tests/test_frap.py"]
