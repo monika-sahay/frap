@@ -3,6 +3,7 @@ name = "frap"
 version = "0.0.0"
 description = "light weight web framework."
 authors = ["Monika Monika <monika_sahay@yahoo.com>"]
+include = ["frap/**"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -24,6 +25,3 @@ exclude = ".git,__pycache__,old,build,dist,env"
 # init-hook = "import os; import sys; sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.dirname(__file__))))"
 max-line-length = 129
 ignore-patterns = ["^frap/tests/test_frap\\.py$"]
-
-[tool.poetry.files]
-include = ["frap/**"]
