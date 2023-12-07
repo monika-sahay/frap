@@ -7,7 +7,7 @@ Frap is a lightweight web framework for building web applications in Python. It 
 - **Routing**: Define routes to map URL paths to route handlers.
 - **Middleware**: Use middleware to customize request and response handling.
 - **Template Rendering**: Render dynamic HTML content using templates.
-- **Database Integration**: Seamlessly connect to databases and perform queries.
+- **Database Integration**: Orm to seamlessly connect to databases and perform queries.
 - **Form Handling**: Easily create and validate HTML forms.
 - **Static Files**: Serve static files like CSS, JavaScript, and images.
 - **Error Handling**: Customize error pages and handle exceptions gracefully.
